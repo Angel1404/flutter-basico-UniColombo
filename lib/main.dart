@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_basico_uni/ui/pages/home/views/home_view.dart';
+// import 'package:flutter_basico_uni/ui/pages/home/views/home_view.dart';
+
+import 'ui/pages/login/views/login_view.dart';
 
 void main() => runApp(const MyApp());
 
@@ -8,10 +10,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Curso Basico Flutter',
-      home: HomeView(),
+      home: LoginView(),
     );
   }
 }
