@@ -1,19 +1,30 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_basico_uni/ui/pages/home/views/home_view.dart';
+import 'package:device_preview/device_preview.dart';
+import 'routes/routes_app.dart';
 
-import 'ui/pages/login/views/login_view.dart';
-
-void main() => runApp(const MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Firebase.initializeApp(options: );
+  runApp(
+    DevicePreview(
+      enabled: kReleaseMode,
+      builder: (context) => const MyApp(),
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Curso Basico Flutter',
-      home: LoginView(),
+      routes: routesApp,
+      initialRoute: "/loginView",
     );
   }
 }

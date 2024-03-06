@@ -2,18 +2,27 @@ import 'package:flutter/material.dart';
 
 import '../../../global_widgets/global_widgets.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+class RegisterView extends StatefulWidget {
+  const RegisterView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
     return Scaffold(
+      // appBar: AppBar(
+      //   leading: IconButton(
+      //     onPressed: () {
+      //       Navigator.pop(context);
+      //     },
+      //     icon: const Icon(Icons.arrow_back),
+      //   ),
+      // ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: SizedBox(
@@ -26,40 +35,37 @@ class _LoginViewState extends State<LoginView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    "Inicio de sesiòn",
+                    "Crear cuenta",
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 25,
                     ),
                   ),
-                  const Text("Por favor ingrese sus credenciales para continuar"),
                   const SizedBox(height: 40),
+                  const InputGenery(hintText: "Nombre completo", prefixIcon: Icon(Icons.person)),
+                  const SizedBox(height: 15),
                   const InputGenery(),
                   const SizedBox(height: 15),
-                  const InputGenery(
-                    hintText: "Contraseña",
-                    prefixIcon: Icon(Icons.lock),
-                    suffix: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [Text("Olvidala"), SizedBox(height: 5)],
-                    ),
-                  ),
+                  const InputGenery(hintText: "Contraseña", prefixIcon: Icon(Icons.lock)),
+                  const SizedBox(height: 15),
+                  const InputGenery(hintText: "Confirmar contraseña", prefixIcon: Icon(Icons.lock)),
                   const SizedBox(height: 50),
                   BtnApp(
+                    title: "Crear cuenta",
                     onPressed: () {
-                      // Navigator.pushNamed(context, "/registerView");
+                      Navigator.pushNamed(context, "/registerView");
                     },
                   ),
                   const SizedBox(height: 30),
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, "/registerView");
+                      Navigator.pop(context);
                     },
                     child: const SizedBox(
                       width: double.maxFinite,
                       child: Text(
-                        "¿No tienes cuenta?, Crea una",
+                        "¿Ya tienes cuenta?, inicia sesión",
                         textAlign: TextAlign.center,
                       ),
                     ),
