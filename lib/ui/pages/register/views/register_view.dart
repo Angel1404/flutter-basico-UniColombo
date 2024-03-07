@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_basico_uni/ui/pages/register/register_controller.dart';
 
 import '../../../global_widgets/global_widgets.dart';
 
@@ -10,6 +11,24 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
+  final controller = RegisterController();
+
+  //Crear los controller de los inputs de Fullname, email, password y confirmar password
+
+  //Crear el metodo initState para asignarle el valor a los controller de los inputs
+
+  //TODO: tomar de ejemplo lo que se hizo con la pantalla de login
+
+  register() async {
+    //Colocar el dialogo de carga
+    final response = await controller.register(email, fullName, password, confimPassword);
+    //Cerrar el dialogo de carga
+
+    //Validar que el response no tenga error con el atriuto response.isError
+    //Si hay error mostrar el snackbar que esta en la pantalla de login con el error
+    //si no hay error navegar a la pantalla de Home
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;

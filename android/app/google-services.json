@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "230628543244",
+    "project_id": "curso-flutter-basico-d819b",
+    "storage_bucket": "curso-flutter-basico-d819b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230628543244:android:a05335955dd90c73c81729",
+        "android_client_info": {
+          "package_name": "com.example.flutter_basico_uni"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDequ8Ry4LuOSwAYcITjku__gWeaO3bfC4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

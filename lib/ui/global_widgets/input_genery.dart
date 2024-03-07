@@ -8,15 +8,20 @@ class InputGenery extends StatelessWidget {
     this.prefixIcon,
     this.hintText,
     this.suffix,
+    this.controller,
+    this.obscureText = false,
   });
 
   final Widget? prefixIcon;
   final String? hintText;
   final Widget? suffix;
-
+  final TextEditingController? controller;
+  final bool obscureText;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
+      obscureText: obscureText,
       decoration: InputDecoration(
         enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(
