@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_basico_uni/data/models/user_model.dart';
+import 'package:flutter_basico_uni/ui/pages/home/home_controller.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -8,10 +10,40 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  final homeController = HomeController();
+
+  UserModel? dataUser;
+
+  @override
+  void initState() {
+    super.initState();
+    print("initState");
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      print("addPostFrameCallback");
+
+      getInitData();
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print("DISCHANGE");
+  }
+
+  getInitData() async {
+    final String? idUser = ModalRoute.of(context)?.settings.arguments as String?;
+    dataUser = await homeController.getDataUser(idUser);
+    setState(() {});
+  }
+
   int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    print("BUILD");
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFF44336),
@@ -41,7 +73,7 @@ class _HomeViewState extends State<HomeView> {
                 color: Colors.blue,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: const Text("Este es un container Basico"),
+              child: Text(dataUser != null ? dataUser!.fullName : "No Data"),
             ),
 
             ListTile(

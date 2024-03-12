@@ -3,11 +3,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class UserService {
   final _cloudFirebase = FirebaseFirestore.instance;
 
-  create(Map<String, dynamic> data) {
+  Future create(Map<String, dynamic> data, String idUser) async {
     try {
-      _cloudFirebase.collection("users").add(data).then(
-            (document) => document.update({"id": document.id}),
-          );
+      await _cloudFirebase.collection("users").doc(idUser).set(data);
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<Map<String, dynamic>> get(String idUser) async {
+    try {
+      final response = await _cloudFirebase.collection("users").doc(idUser).get();
+
+      return response.data() ?? {};
     } catch (e) {
       throw e.toString();
     }

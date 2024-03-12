@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_basico_uni/ui/pages/register/register_controller.dart';
 
+import '../../../global_widgets/dialog.dart';
 import '../../../global_widgets/global_widgets.dart';
 
 class RegisterView extends StatefulWidget {
@@ -14,20 +15,61 @@ class _RegisterViewState extends State<RegisterView> {
   final controller = RegisterController();
 
   //Crear los controller de los inputs de Fullname, email, password y confirmar password
+  late final TextEditingController _emailController;
+  late final TextEditingController _fullNameController;
+  late final TextEditingController _passwordController;
+  late final TextEditingController _confirmPasswordController;
 
   //Crear el metodo initState para asignarle el valor a los controller de los inputs
-
   //TODO: tomar de ejemplo lo que se hizo con la pantalla de login
+  @override
+  void initState() {
+    super.initState();
+    _emailController = TextEditingController();
+    _fullNameController = TextEditingController();
+    _passwordController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
+  }
 
   register() async {
     //Colocar el dialogo de carga
-    final response = await controller.register(email, fullName, password, confimPassword);
+    loadingDialog(context);
+
+    final response = await controller.register(
+      _emailController.text,
+      _fullNameController.text,
+      _passwordController.text,
+      _confirmPasswordController.text,
+    );
     //Cerrar el dialogo de carga
+    if (mounted) {
+      Navigator.pop(context);
+    }
 
     //Validar que el response no tenga error con el atriuto response.isError
     //Si hay error mostrar el snackbar que esta en la pantalla de login con el error
     //si no hay error navegar a la pantalla de Home
+    if (response.isError && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          content: Column(
+            children: [
+              const Text("A ocurrido un error"),
+              Text("El error es:  ${response.errorMessage}"),
+            ],
+          ),
+        ),
+      );
+      return;
+    }
+    if (mounted) {
+      Navigator.pushReplacementNamed(context, "/homeView", arguments: response.data);
+    }
   }
+
+  bool isOscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -62,20 +104,31 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
                   ),
                   const SizedBox(height: 40),
-                  const InputGenery(hintText: "Nombre completo", prefixIcon: Icon(Icons.person)),
-                  const SizedBox(height: 15),
-                  const InputGenery(),
-                  const SizedBox(height: 15),
-                  const InputGenery(hintText: "Contraseña", prefixIcon: Icon(Icons.lock)),
-                  const SizedBox(height: 15),
-                  const InputGenery(hintText: "Confirmar contraseña", prefixIcon: Icon(Icons.lock)),
-                  const SizedBox(height: 50),
-                  BtnApp(
-                    title: "Crear cuenta",
-                    onPressed: () {
-                      Navigator.pushNamed(context, "/registerView");
-                    },
+                  InputGenery(
+                    hintText: "Nombre completo",
+                    prefixIcon: const Icon(Icons.person),
+                    controller: _fullNameController,
                   ),
+                  const SizedBox(height: 15),
+                  InputGenery(controller: _emailController),
+                  const SizedBox(height: 15),
+                  InputGenery(
+                    obscureText: isOscureText,
+                    hintText: "Contraseña",
+                    prefixIcon: const Icon(Icons.lock),
+                    controller: _passwordController,
+                    suffix: _visiilityPassword(),
+                  ),
+                  const SizedBox(height: 15),
+                  InputGenery(
+                    obscureText: isOscureText,
+                    hintText: "Confirmar contraseña",
+                    prefixIcon: const Icon(Icons.lock),
+                    controller: _confirmPasswordController,
+                    suffix: _visiilityPassword(),
+                  ),
+                  const SizedBox(height: 50),
+                  BtnApp(title: "Crear cuenta", onPressed: register),
                   const SizedBox(height: 30),
                   InkWell(
                     onTap: () {
@@ -95,6 +148,16 @@ class _RegisterViewState extends State<RegisterView> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _visiilityPassword() {
+    return InkWell(
+      onTap: () {
+        isOscureText = !isOscureText;
+        setState(() {});
+      },
+      child: Icon(isOscureText ? Icons.visibility_off : Icons.visibility),
     );
   }
 }

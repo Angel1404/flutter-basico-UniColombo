@@ -1,9 +1,9 @@
-class BaseResponse {
+class BaseResponse<T> {
   final String? errorMessage;
   final bool isError;
-  final dynamic data;
+  final T? data;
 
   BaseResponse({this.errorMessage, this.isError = false, this.data});
 
-  static BaseResponse errorString(String error) => BaseResponse(errorMessage: error, isError: true);
+  static errorString(String error) => BaseResponse(errorMessage: error, isError: true);
 }

@@ -19,7 +19,6 @@ class _LoginViewState extends State<LoginView> {
   @override
   void initState() {
     super.initState();
-    print("Ejecutando initState");
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
   }
@@ -47,7 +46,7 @@ class _LoginViewState extends State<LoginView> {
       return;
     }
     if (mounted) {
-      Navigator.pushReplacementNamed(context, "/homeView");
+      Navigator.pushReplacementNamed(context, "/homeView", arguments: response.data);
     }
   }
 
@@ -93,8 +92,12 @@ class _LoginViewState extends State<LoginView> {
                   BtnApp(onPressed: login),
                   const SizedBox(height: 30),
                   InkWell(
-                    onTap: () {
+                    onTap: ()
+                        //  async
+                        {
+                      // final response = await
                       Navigator.pushNamed(context, "/registerView");
+                      // print((response as Text).data);
                     },
                     child: const SizedBox(
                       width: double.maxFinite,
